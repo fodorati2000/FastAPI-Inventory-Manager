@@ -1,4 +1,3 @@
-// Az oldal betöltésekor azonnal lekérjük a termékeket
 loadProducts();
 
 // --- TERMÉK KEZELÉS (Products) ---

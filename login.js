@@ -15,17 +15,13 @@ async function login() {
         const result = await response.json();
 
         if (response.ok && result.status === "Success") { 
-            // 1. Elmentjük a tényt, hogy bejelentkeztünk (például sessionStorage-ba)
             sessionStorage.setItem("isLoggedIn", "true");
             sessionStorage.setItem("currentUser", result.user);
 
             await Swal.fire("Siker!", "Sikeres bejelentkezés", "success"); 
-            
-            // 2. Átirányítás a főoldalra (például index.html)
             window.location.href = "index.html"; 
             
         } else {
-            // Ha a Python azt mondta: "Error"
             Swal.fire("Hiba!", result.message || "Hibás adatok", "error");
         }
     } catch (error) {

@@ -3,6 +3,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 import os
 import bcrypt
+import traceback
 
 class Database_Manager:
     def __init__(self):
@@ -28,12 +29,12 @@ class Database_Manager:
                 cursor.execute("CREATE TABLE IF NOT EXISTS categories (id SERIAL PRIMARY KEY, name TEXT UNIQUE NOT NULL)")
                 cursor.execute("CREATE TABLE IF NOT EXISTS locations (id SERIAL PRIMARY KEY, name TEXT UNIQUE NOT NULL)")
                 cursor.execute("""
-                                CREATE TABLE IF NOT EXISTS users (
-                                    id SERIAL PRIMARY KEY,
-                                    username VARCHAR(50) UNIQUE NOT NULL,
-                                    password VARCHAR(255) NOT NULL   
-                                )
-                            """)
+                    CREATE TABLE IF NOT EXISTS users (
+                        id SERIAL PRIMARY KEY,
+                        username VARCHAR(50) UNIQUE NOT NULL,
+                        password VARCHAR(255) NOT NULL   
+                    )
+                """)
                 cursor.execute("""
                     CREATE TABLE IF NOT EXISTS products (
                         id SERIAL PRIMARY KEY,
@@ -60,33 +61,19 @@ class Database_Manager:
         conn = self.get_connection()
         try:
             with conn.cursor() as cursor:
-                # 1. Lekérjük a nevet és a jelszót (hash-t)
                 query = "SELECT username, password FROM users WHERE username = %s"
                 cursor.execute(query, (username,))
                 result = cursor.fetchone()
-                
                 if result:
                     db_username = result['username']
-                    stored_hash = result['password'] # Ez az adatbázisból jövő hash
-
-                    # BIZTONSÁGI JAVÍTÁS: 
-                    # A bcryptnek bytes kell. Ha stringet kaptunk, kódoljuk át.
+                    stored_hash = result['password']
                     if isinstance(stored_hash, str):
                         stored_hash = stored_hash.encode('utf-8')
-                    
-                    # A beírt jelszót is bytes-szá alakítjuk
                     typed_password_bytes = password.encode('utf-8')
-
-                    # 2. Ellenőrzés
                     if bcrypt.checkpw(typed_password_bytes, stored_hash):
                         return {"status": "Success", "username": db_username}
-                
-                # Ha nincs találat vagy nem egyezik a jelszó
                 return {"status": "Error", "message": "Hibás név vagy jelszó"}
-
         except Exception as e:
-            # Itt kiíratjuk a pontos hibát a logba, hogy ne csak egy '0'-át lássunk
-            import traceback
             print("PONTOS HIBA ÜZENET:")
             print(traceback.format_exc()) 
             return {"status": "Error", "message": "Szerver hiba történt"}
@@ -98,20 +85,13 @@ class Database_Manager:
         try:
             if not username or not pw:
                 return {"status": "Error", "message": "Minden mezőt ki kell tölteni!"}
-            
             password_bytes = pw.encode('utf-8')
             salt = bcrypt.gensalt()
             hashed_password_bytes = bcrypt.hashpw(password_bytes, salt)
-
-            # Ez a fontos lépés: alakítsd bytes-ból stringgé!
             hashed_password_string = hashed_password_bytes.decode('utf-8')
-
             with conn.cursor() as cursor:
                 query = "INSERT INTO users (username, password) VALUES (%s, %s)"
-                
                 cursor.execute(query, (username, hashed_password_string))
-                
-
                 conn.commit()
                 return {"status": "Success", "username": username}
         except Exception as e:
@@ -119,7 +99,6 @@ class Database_Manager:
             return {"status": "Error", "message": str(e)}
         finally:
             conn.close()
-
 
     def add_values(self, table_name, name):
         conn = self.get_connection()
@@ -174,8 +153,6 @@ class Database_Manager:
         conn = self.get_connection()
         try:
             with conn.cursor() as cursor:
-               
-                
                 cursor.execute("""
                     UPDATE products 
                     SET name = %s, 
@@ -187,17 +164,7 @@ class Database_Manager:
                         stock_quantity = %s, 
                         condition = %s
                     WHERE id = %s
-                """, (
-                    name, 
-                    brand_id, 
-                    category_id, 
-                    location_id, 
-                    p_price, 
-                    s_price, 
-                    stock, 
-                    condition, 
-                    product_id
-                ))
+                """, (name, brand_id, category_id, location_id, p_price, s_price, stock, condition, product_id))
                 conn.commit()
         except Exception as e:
             print(f"Database error: {e}")
