@@ -1,0 +1,32 @@
+
+services:
+  # Az adatbázis (PostgreSQL)
+  db:
+    image: postgres:15
+    container_name: raktar_db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: titkosjelszo
+      POSTGRES_DB: raktar_bolt
+    volumes:
+      - .:/app
+    ports:
+      - "5432:5432"
+
+  # A te FastAPI alkalmazásod
+  web:
+    build: .
+    container_name: raktar_web
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - ./static/images:/app/static/images
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://admin:titkosjelszo@db:5432/raktar_bolt
+
+volumes:
+  postgres_data:

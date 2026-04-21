@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="login.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="login.css">
+
+</head>
+<body>
+    <div class="container">
+        <div id="login-panel">
+            <h1>Bejelentkezés</h1>
+            <input type="text" name="user" id="log_username" class="username">
+            <input type="password" name="pw" id="log_password" class="password">
+            <button class="login-btn" id="login-log-btn" onclick="login()">Login</button>
+            <button class="reg-btn" id="login-reg-btn" onclick="view('reg-panel')">Regisztráció</button>
+        </div>
+
+        <div id="reg-panel">
+            <h1>Regisztáció</h1>
+            <input type="text" name="user" id="reg_username" class="username">
+            <input type="password" name="pw" id="reg_password" class="password">
+            <input type="password" name="pw2" id="reg_password2" class="password">
+            <button class="login-btn" id="register-reg-btn" onclick="register()">Regisztráció</button>
+            <button class="reg-btn" id="register-login-btn" onclick="view('login-panel')">Bejelentkezés</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,228 @@
+:root {
+    --primary-color: #2ecc71;
+    --primary-hover: #27ae60;
+    --bg-color: #f8f9fa;
+    --text-color: #2c3e50;
+    --border-color: #dcdde1;
+}
+
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    margin: 0;
+    padding: 20px;
+    background-color: var(--bg-color);
+}
+
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    align-items: stretch;
+}
+
+/* Az oldalsó menü stílusa */
+.side-menu {
+    width: 260px;
+    color: black;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    position: sticky; /* Ott marad az oldalon, ha görgetsz lefelé */
+    top: 0;
+    height: 100vh;
+}
+
+/* Cím a menüben (opcionális, ha akarsz bele) */
+.side-menu::before {
+    content: "MENÜ";
+    color: #080808; 
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.button-group {
+    color: #080808;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.button-group button {
+    width: 100%; /* Kitölti a menü szélességét */
+    text-align: left; /* Balra zárt szöveg, mint a profi menükben */
+    padding: 12px 15px;
+    color: #080808  ;
+    background-color: transparent;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: none;
+}
+
+.button-group button:hover {
+    background-color: var(--primary-color);
+    transform: translateX(5px); /* Kicsit "beugrik" jobbra hovernél */
+}
+
+/* A fő tartalom (táblázat) területe */
+.main {
+    flex: 1;
+    padding: 40px;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* A táblázat maradjon középen a maradék helyen */
+}
+
+
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 30px;
+}
+
+/* Konténer a gomboknak */
+.button-group {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+button { 
+    padding: 12px 24px; 
+    cursor: pointer; 
+    background-color: var(--primary-color); 
+    color: white; 
+    border: none; 
+    border-radius: 8px; 
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+button:hover { 
+    background-color: var(--primary-hover); 
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Beviteli mezők stílusa */
+input[type="text"] {
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    margin-right: 10px;
+    outline: none;
+    transition: border 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: var(--primary-color);
+}
+
+/* Panel konténerek */
+#newbrand_container, #newpolc_container, #newproduct {
+    display: none;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    width: 100%;
+    max-width: 600px;
+}
+#product_container{
+    display: none;
+}
+
+.danger-button{
+     background-color: rgba(223, 71, 71,0.7); 
+}
+
+.danger-button:hover{
+     background-color: rgba(223, 71, 71,1); 
+}
+
+.edit-button{
+     background-color: rgba(237, 144, 4 ,0.7); 
+}
+
+.edit-button:hover{
+     background-color: rgb(237, 144, 4); 
+}
+/* Táblázat modernizálása */
+table { 
+    
+    width: 100%; 
+    max-width: 900px;
+    border-collapse: separate; 
+    border-spacing: 0;
+    margin-top: 30px; 
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+}
+
+th, td { 
+    padding: 15px; 
+    text-align: left; 
+    border-bottom: 1px solid #f1f1f1;
+}
+
+th { 
+    background-color: #f8f9fa; 
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover {
+    background-color: #fcfcfc;
+}
+
+
+td input {
+    width: 90%;
+    padding: 5px;
+    border: 1px solid #2ecc71;
+    border-radius: 4px;
+}
+
+#termek-tablazat td input {
+    width: 100%;   
+    box-sizing: border-box; 
+  
+}
+
+#termek-tablazat td {
+    overflow: hidden;  
+    white-space: nowrap; 
+}
+
+
+.edit-rolldown, .new-select{
+    width: auto;
+    padding: 5px;
+    
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+.list-img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+
+    border-radius: 8px;
+    border: 1px solid #ddd; 
+    display: block;
+}

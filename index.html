@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hardware Inventory Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="container">
+
+        <div class="side-menu">
+            <div class="button-group">
+                <button onclick="loadProducts(), toggleView('list_container')">Refresh List</button>
+                <button onclick="toggleView('brand_container')">New Brand</button>
+                <button onclick="toggleView('category_container')">New Category</button>
+                <button onclick="toggleView('location_container')">New Location</button>
+                 <button onclick="toggleView('product_container')">New Product</button>
+                 <button onclick="toggleView('low_stock')">Low Stock</button>
+            </div>
+        </div>
+
+        <div class="main">
+           <div id="product_container" >
+    <h1>📦 Add New Product</h1>
+    
+    <input id="new_item_name" type="text" placeholder="Product Name">
+    
+    <div class="row">
+        <select id="new_item_brand_id" class="new-select"></select>
+        <select id="new_item_category_id" class="new-select"></select>
+        <select id="new_item_location_id" class="new-select"></select>
+    </div>
+
+    <div class="row">
+        <input id="new_item_purchase_price" type="number" placeholder="Purchase Price">
+        <input id="new_item_sale_price" type="number" placeholder="Sale Price">
+    </div>
+
+    <div class="row">
+        <input id="new_item_stock" type="number" placeholder="Stock Quantity">
+        <select id="new_item_condition">
+            <option value="New">New</option>
+            <option value="Used">Used</option>
+            <option value="Refurbished">Refurbished</option>
+            <option value="Parts">Faulty / Parts</option>
+        </select>
+    </div>
+
+    <input type="file" id="new_item_image" accept="image/*">
+    <button onclick="addItem()">Add to Inventory</button>
+</div>
+
+            <div class="list" id="list_container">
+                <h1>📦 Stock Inventory</h1>
+                <table id="product-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Product</th>
+                            <th>Brand</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Condition</th>
+                            <th><input id="search_input" oninput="searchByName()" type="text" placeholder="Search..."></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+
+            <div id="brand_container" style="display: none;">
+                <h1>Add New Brand</h1>
+                <input id="new_brand_name" type="text" placeholder="Brand name (e.g. Sony)">
+                <button onclick="addBrand()">Save Brand</button>
+            </div>
+
+            <div id="category_container" style="display: none;">
+                <h1>Add New Category</h1>
+                <input id="new_category_name" type="text" placeholder="Category (e.g. GPU, Console)">
+                <button onclick="addCategory()">Save Category</button>
+            </div>
+
+            <div id="location_container" style="display: none;">
+                <h1>Add New Location</h1>
+                <input id="new_location_name" type="text" placeholder="Storage location (e.g. Shelf A1)">
+                <button onclick="addLocation()">Save Location</button>
+            </div>
+            
+
+        </div>
+    </div>
+</body>
+</html>
